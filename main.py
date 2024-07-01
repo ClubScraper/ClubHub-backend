@@ -8,13 +8,11 @@ db = Database()
 # Purging old events
 accounts = db.getData(ACCOUNTS_TABLE, "club_name")
 purge_date = datetime.today() - timedelta(days=90)
-purge_date = purge_date.date()
 db.purgeData(ACCOUNTS_TABLE, purge_date)
 
 # Adding new events
 start_date = datetime.today() - timedelta(days=7)
-start_date = start_date.date()
-end_date = datetime.today().date()
+end_date = datetime.today()
 
 unfiltered_data = fetchData(accounts, start_date, end_date)
  
