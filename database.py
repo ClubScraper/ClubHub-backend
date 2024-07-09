@@ -1,9 +1,12 @@
+import os
+from dotenv import load_dotenv
 from supabase import create_client, Client
-from define import KEY, URL
+
+load_dotenv()
 
 class Database:
     def __init__(self):
-        self.db: Client = create_client(URL, KEY)
+        self.db: Client = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY"))
     
         """
         TO DO! As of right now this function is useless as its functionality 
