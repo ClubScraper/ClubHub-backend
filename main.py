@@ -26,6 +26,24 @@ unfiltered_data = fetchData(accounts, start_date, end_date)
 
 print(unfiltered_data)
 
+# TODOS:
+
+# 1. Error Handling for Instaloader
+# Sometimes Instaloader throws errors that can be resolved by rerunning the scipt
+# Find a way to todo this
+
+# 2. Refining Prompt Template
+# The output of LLAMA,predict_post is not exactly what we want. Fixing the prompt
+# template defined in constatns.py or by manually fixing the input
+
+# 3. Timing calls to HuggingFace Inference API
+# If the data exceeds a certain size, space out the calls to the HuggingFace Inference 
+# API ie the predict_post function in inference.py
+
+# 4. Make this file into something that you can run on your laptop biweekly
+# or whenver you want (specific dates are superflous). No idea what is the best 
+# way to go about doing this; a simple bash script is probably more than enough tho.
+
 # Predict content and extract dates from post
 for post in unfiltered_data:
     result = LLAMA.predict_post(post=post)
