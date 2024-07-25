@@ -40,10 +40,6 @@ print(unfiltered_data)
 # If the data exceeds a certain size, space out the calls to the HuggingFace Inference 
 # API ie the predict_post function in inference.py
 
-# 4. Make this file into something that you can run on your laptop biweekly
-# or whenver you want (specific dates are superflous). No idea what is the best 
-# way to go about doing this; a simple bash script is probably more than enough tho.
-
 # Predict content and extract dates from post
 for post in unfiltered_data:
     result = LLAMA.predict_post(post=post)

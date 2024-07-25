@@ -1,0 +1,11 @@
+Script that runs main.py (implement in cron). This will be implemented once our model is fully implemented.
+
+0 9 * * 1 /usr/bin/python3 /home/user/Desktop/DataWrangling/main.py
+
+This will run our script every Monday at 9am.
+
+To redirect stdout:
+
+0 9 * * 1 /usr/bin/python3 /home/user/Desktop/DataWrangling/main.py >> /home/user/Desktop/DataWrangling/logs.txt 2>&1
+
+This will also redirect and stderr output into the text file.
