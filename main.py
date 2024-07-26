@@ -1,5 +1,7 @@
 import os
 import instaloader
+import re
+import json
 
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
@@ -29,13 +31,11 @@ end_date = datetime.today()
 # Getting new Events
 unfiltered_data = fetchData(accounts, start_date, end_date, L)
 
-print(unfiltered_data)
+#print(unfiltered_data)
 
 # TODOS:
 
-# 1. Error Handling for Instaloader
-# Sometimes Instaloader throws errors that can be resolved by rerunning the scipt
-# Find a way to todo this
+
 
 # 2. Refining Prompt Template
 # The output of LLAMA,predict_post is not exactly what we want. Fixing the prompt
@@ -45,10 +45,29 @@ print(unfiltered_data)
 # If the data exceeds a certain size, space out the calls to the HuggingFace Inference 
 # API ie the predict_post function in inference.py
 
+predictions = []
+
 # Predict content and extract dates from post
 for post in unfiltered_data:
-    result = LLAMA.predict_post(post=post)
-    print(result)
+    predictions.append(LLAMA.predict_post(post=post))
     
+to_upload = []
+pattern = re.compile(r'\{.*\}')
+for prediction in predictions:
+    match = pattern.search(prediction)
+    if match:
+        dict = match.group(0)
+        result = json.loads(dict)
+        to_upload.append(result)
+
+print(to_upload)
+
 # Insert into databse
-# db.insertData(DATA_TABLE, unfiltered_data)
+for i in range(0, len(to_upload)):
+    if (to_upload[i].get("type") != 'Misc.' and to_upload[i].get("relevant_dates") != ''):
+        to_upload[i]['caption'] = unfiltered_data[i]['caption']
+        db.insertData(DATA_TABLE, to_upload[i])
+
+
+
+print(to_upload)
