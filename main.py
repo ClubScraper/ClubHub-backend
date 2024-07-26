@@ -1,4 +1,6 @@
 import os
+import instaloader
+
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from huggingface_hub import InferenceClient
@@ -13,6 +15,9 @@ load_dotenv()
 db = Database()
 LLAMA = Inference(model=MODEL, token=os.getenv("HUGGING_FACE_TOKEN"))
 
+L = instaloader.Instaloader()
+L.load_session_from_file(os.getenv("INSTAGRAM_USER"), os.getenv("INSTAGRAM_SESSION"))
+
 # Purging old events
 accounts = db.getData(ACCOUNTS_TABLE, "club_name")
 purge_date = datetime.today() - timedelta(days=90)
@@ -22,7 +27,7 @@ start_date = datetime.today() - timedelta(days=7)
 end_date = datetime.today()
 
 # Getting new Events
-unfiltered_data = fetchData(accounts, start_date, end_date)
+unfiltered_data = fetchData(accounts, start_date, end_date, L)
 
 print(unfiltered_data)
 

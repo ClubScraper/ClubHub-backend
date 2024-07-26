@@ -6,8 +6,7 @@ from itertools import dropwhile, takewhile
 This function returns the caption and post date for all Instagram posts made by 
 each account in accounts between StartDate and EndDate as a list of dictionaries.
 """
-def fetchData(accounts, StartDate, EndDate):
-    L = instaloader.Instaloader()
+def fetchData(accounts, StartDate, EndDate, L):
     data = []
   
     for account in accounts:
