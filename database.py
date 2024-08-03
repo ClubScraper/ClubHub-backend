@@ -33,7 +33,7 @@ class Database:
         attribute is before the specified date date
         """
     def purgeData(self, table_name, date):
-        response = self.db.table(table_name).delete().lt("posting_date", date).execute()
+        response = self.db.table(table_name).delete().lt("relevant_dates", date).execute()
         try:
             return response
         except Exception as exception:
