@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from huggingface_hub import InferenceClient
 
-from scraper import fetchData
+from scraper import fetchData, fetchDataNoLogin
 from database import Database
 from inference import Inference
 from constants import ACCOUNTS_TABLE, DATA_TABLE, MODEL
@@ -21,17 +21,19 @@ L = instaloader.Instaloader()
 L.load_session_from_file(os.getenv("INSTAGRAM_USER"), os.getenv("INSTAGRAM_SESSION"))
 
 # Purging old events
-accounts = db.getData(ACCOUNTS_TABLE, "club_name")
+accounts = db.getData(DATA_TABLE, "account")
 purge_date = datetime.today() - timedelta(days=90)
-db.purgeData(ACCOUNTS_TABLE, purge_date)
+db.purgeData(DATA_TABLE, purge_date)
 
 start_date = datetime.today() - timedelta(days=7)
 end_date = datetime.today()
 
 # Getting new Events
+# Getting new Events
 unfiltered_data = fetchData(accounts, start_date, end_date, L)
+if (unfiltered_data == []):
+    unfiltered_data = fetchDataNoLogin(accounts, start_date, end_date)
 
-#print(unfiltered_data)
 
 # TODOS:
 
@@ -50,7 +52,9 @@ predictions = []
 # Predict content and extract dates from post
 for post in unfiltered_data:
     predictions.append(LLAMA.predict_post(post=post))
-    
+
+print(predictions)
+
 to_upload = []
 pattern = re.compile(r'\{.*\}')
 for prediction in predictions:

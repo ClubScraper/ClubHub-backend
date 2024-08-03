@@ -1,3 +1,3 @@
-## Data Wrangling for Clubs@UFT
+## Data Wrangling for Uoft ClubHUB
 
-This repository contains the code that updates the database for Clubs@UFT.
+This repository contains the code that updates the database for Uoft ClubHUB.
