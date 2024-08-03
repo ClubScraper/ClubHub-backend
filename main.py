@@ -30,10 +30,7 @@ unfiltered_data = fetchData(accounts, start_date, end_date, L)
 if (unfiltered_data == []):
     unfiltered_data = fetchDataNoLogin(accounts, start_date, end_date)
 
-
 # TODOS:
-
-
 
 # 2. Refining Prompt Template
 # The output of LLAMA,predict_post is not exactly what we want. Fixing the prompt
@@ -43,7 +40,7 @@ if (unfiltered_data == []):
 # If the data exceeds a certain size, space out the calls to the HuggingFace Inference 
 # API ie the predict_post function in inference.py
 
-# predictions = []
+predictions = []
 
 # Predict content and extract dates from post
 for post in unfiltered_data:
@@ -60,14 +57,10 @@ for prediction in predictions:
         result = json.loads(dict)
         to_upload.append(result)
 
-# print(to_upload)
-
-# # Insert into databse
-# for i in range(0, len(to_upload)):
-#     if (to_upload[i].get("type") != 'Misc.' and to_upload[i].get("relevant_dates") != ''):
-#         to_upload[i]['caption'] = unfiltered_data[i]['caption']
-#         db.insertData(DATA_TABLE, to_upload[i])
-
-
+# Insert into databse
+for i in range(0, len(to_upload)):
+    if (to_upload[i].get("type") != 'Misc.' and to_upload[i].get("relevant_dates") != ''):
+        to_upload[i]['caption'] = unfiltered_data[i]['caption']
+        db.insertData(DATA_TABLE, to_upload[i])
 
 print(to_upload)
