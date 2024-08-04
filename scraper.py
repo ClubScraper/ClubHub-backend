@@ -1,4 +1,5 @@
 import instaloader
+from tenacity import retry, stop_after_attempt, wait_random_exponential
 from datetime import datetime
 from itertools import dropwhile, takewhile
 
@@ -25,7 +26,7 @@ def fetchData(accounts, StartDate, EndDate, L):
     return data
 
 
-
+@retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
 def fetchDataNoLogin(accounts, StartDate, EndDate):
     L = instaloader.Instaloader()
     data = []
