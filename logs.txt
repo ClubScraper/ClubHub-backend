@@ -1,0 +1,1 @@
+08/19/14:27,399 ClubHUB DEBUG Summary: 64 events scraped and processed.
