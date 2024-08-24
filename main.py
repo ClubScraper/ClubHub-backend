@@ -14,8 +14,6 @@ from database import Database
 from inference import Inference
 from constants import ACCOUNTS_TABLE, DATA_TABLE, MODEL
 
-
-
 load_dotenv()
 
 logger = logging.getLogger("ClubHUB")
