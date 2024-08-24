@@ -9,8 +9,7 @@ class Database:
         self.db: Client = create_client(os.getenv("SUPABASE_URL"), os.getenv("SUPABASE_KEY"))
     
         """
-        TO DO! As of right now this function is useless as its functionality 
-        already exists within the Supabase Python client 
+        This function gets the all data in column column from the table table_name. 
         """
     def getData(self, table_name, column):      
         response = self.db.table(table_name).select("*").execute()
@@ -19,7 +18,7 @@ class Database:
 
         """
         This function both format and inserts data data to the table table_name. 
-        data is expected to be in json format enclosed within a list.
+        Data is expected to be in json format enclosed within a list.
         """
     def insertData(self, table_name, data):
         try:
