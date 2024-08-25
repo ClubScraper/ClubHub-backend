@@ -15,6 +15,8 @@ PROMPT_TEMPLATE = """
 Given the following Instagram post data:
 
 Account: {account}
+Name: {name}
+Department: {department}
 Date: {date}
 Caption: {caption}
 
@@ -29,7 +31,7 @@ date will be 7/27/24, a Saturday).
 Only return the data in the response AS A DICTIONARY. DO NOT INCLUDE ANY EXPLANATIONS, CODE, OR RAW DATA.
 PLEASE EXCLUDE ANY STATEMENTS SUCH AS "import re, import json, def extract_info, ''', #, Note: ", etc.
 
-Response format: {{"account": "{account}", "posting_date": "{date}", "type": "<Type>", "relevant_dates": "<Relevant Dates>"}}
+Response format: {{"account": "{account}", "name": {name}, "department": {department}, "posting_date": "{date}", "type": "<Type>", "relevant_dates": "<Relevant Dates>"}}
 
 ONLY OUTPUT THE LIST, NO EXPLANATIONS, # COMMENTS, DUPLICATE DATA, NOTES, OR EXTRA TEXT.
 """

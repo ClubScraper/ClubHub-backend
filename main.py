@@ -12,6 +12,7 @@ import backoff
 from scraper import fetchData, fetchDataNoLogin
 from database import Database
 from inference import Inference
+
 from constants import (
     UTM_NAMES,
     UTSG_NAMES,
@@ -28,10 +29,10 @@ from constants import (
 # Setting up
 
 logger = logging.getLogger("ClubHUB")
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 file_handler = logging.FileHandler("logs.txt")
-file_handler.setLevel(logging.DEBUG)
+file_handler.setLevel(logging.INFO)
 
 formatter = logging.Formatter('%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s', datefmt='%m/%d/%H:%M')
 file_handler.setFormatter(formatter)
@@ -44,6 +45,8 @@ L = instaloader.Instaloader()
 
 name_tables = [UTM_NAMES, UTSC_NAMES, UTSG_NAMES]
 post_tables = [UTM_POSTS, UTSC_POSTS, UTSC_POSTS]
+
+total_predictions = 0
 
 for name_table, post_table in zip(name_tables, post_tables):
     
@@ -58,9 +61,13 @@ for name_table, post_table in zip(name_tables, post_tables):
     start_date = datetime.today() - timedelta(days=START_DELTA)
     end_date = datetime.today()
 
-    unfiltered_data = fetchData(accounts, start_date, end_date, L)
+    unfiltered_data = fetchData(accounts, departments, names, start_date, end_date, L)
     if (unfiltered_data == []):
-        unfiltered_data = fetchDataNoLogin(accounts, start_date, end_date)
+        try:
+            unfiltered_data = fetchDataNoLogin(accounts, start_date, end_date)
+        except instaloader.exceptions.LoginRequiredException:
+            logger.error(f"Instaloader Login Required Exception for {name_table}. {total_predictions} processed, scraped and filter before failure.")
+            exit()
 
     predictions = []
 
@@ -76,11 +83,16 @@ for name_table, post_table in zip(name_tables, post_tables):
             dict = match.group(0)
             result = json.loads(dict)
             to_upload.append(result)
-
+    
+    prediction_count = len(predictions)
+    total_predictions += total_predictions
     # Insert into databse
     for i in range(0, len(to_upload)):
         if (to_upload[i].get("type") != 'Misc.' and to_upload[i].get("relevant_dates") != ''):
             to_upload[i]['caption'] = unfiltered_data[i]['caption']
             database.insertData(post_table, to_upload[i])
+    print(to_upload)
+    logger.info(f"{name_table}: {prediction_count} events scraped, processed and inserted.")
 
-    logger.debug(f"Summary: {len(predictions)} events scraped and processed.")
+
+logger.info(f"Summary: {total_predictions} events scraped and processed.")

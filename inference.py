@@ -13,6 +13,8 @@ class Inference:
     
     def predict_post(self, post):
         prompt = PROMPT_TEMPLATE.format(account=post['account'], 
+                                        name=post['name'],
+                                        department=post['department'],
                                         date=post['date'], 
                                         caption=post['caption'])
         response = self.model.text_generation(prompt=prompt)
