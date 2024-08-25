@@ -42,6 +42,7 @@ logger.addHandler(file_handler)
 database = Database()
 LLAMA = Inference(model=MODEL, token=os.getenv("HUGGING_FACE_TOKEN"))
 L = instaloader.Instaloader() 
+L.login(os.getenv("INSTAGRAM_USER"), os.getenv("INSTAGRAM_PASS")) 
 
 name_tables = [UTM_NAMES, UTSC_NAMES, UTSG_NAMES]
 post_tables = [UTM_POSTS, UTSC_POSTS, UTSC_POSTS]
@@ -65,8 +66,10 @@ for name_table, post_table in zip(name_tables, post_tables):
         unfiltered_data = fetchData(accounts, departments, names, start_date, end_date, L)
     except instaloader.exceptions.LoginRequiredException: 
         logger.error(f"HANDLED: fetchData raised instaloader.exceptions.LoginRequiredException {name_table}. {total_predictions} processed, scraped and filter before failure.")
-        unfiltered_data = fetchDataNoLogin(accounts, start_date, end_date) # If this raises LoginRequiredException we will accept the crash
-
+        unfiltered_data = fetchDataNoLogin(accounts, departments, names, start_date, end_date) # If this raises LoginRequiredException we will accept the crash
+    except instaloader.exceptions.QueryReturnedBadRequestException:
+        logger.error
+        exit(f"FAILURE: fetchData raised instaloader.exceptions.QueryReturnedBadRequestException for {name_table}. Instagram thinks we are a bot.")
     predictions = []
 
     # Predict content and extract dates from post
@@ -89,7 +92,9 @@ for name_table, post_table in zip(name_tables, post_tables):
         if (to_upload[i].get("type") != 'Misc.' and to_upload[i].get("relevant_dates") != ''):
             to_upload[i]['caption'] = unfiltered_data[i]['caption']
             database.insertData(post_table, to_upload[i])
+    
     print(to_upload)
+    
     logger.info(f"{name_table}: {prediction_count} events scraped, processed and inserted.")
 
 

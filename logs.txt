@@ -1,1 +1,7 @@
-08/25/09:59,360 ClubHUB INFO prod_utm_club_names: 0 events scraped, processed and inserted.
+08/25/10:07,10 ClubHUB INFO prod_utm_club_names: 0 events scraped, processed and inserted.
+08/25/10:07,496 ClubHUB ERROR HANDLED: fetchData raised instaloader.exceptions.LoginRequiredException prod_utsc_club_names. 0 processed, scraped and filter before failure.
+08/25/10:08,915 ClubHUB INFO prod_utm_club_names: 0 events scraped, processed and inserted.
+08/25/10:15,766 ClubHUB INFO prod_utm_club_names: 0 events scraped, processed and inserted.
+08/25/10:15,619 ClubHUB INFO prod_utsc_club_names: 0 events scraped, processed and inserted.
+08/25/10:16,22 ClubHUB INFO prod_utsg_club_names: 0 events scraped, processed and inserted.
+08/25/10:16,23 ClubHUB INFO Summary: 0 events scraped and processed.
