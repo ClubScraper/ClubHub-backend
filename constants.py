@@ -1,7 +1,11 @@
-ACCOUNTS_TABLE="club_accounts"
-DATA_TABLE="test"
-
 MODEL="meta-llama/Meta-Llama-3-8B-Instruct"
+
+UTSC_NAMES="prod_utsc_names"
+UTM_NAMES="prod_utm_names"
+UTSG_NAMES="prod_utsg_names"
+UTSC_POSTS="prod_utsc_club_posts"
+UTM_POSTS="prod_utm_club_posts"
+UTSG_POSTS="prod_utsg_club_posts"
 
 
 prompt_template = """
