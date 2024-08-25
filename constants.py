@@ -7,8 +7,11 @@ UTSC_POSTS="prod_utsc_club_posts"
 UTM_POSTS="prod_utm_club_posts"
 UTSG_POSTS="prod_utsg_club_posts"
 
+PURGE_BEFORE=90
+START_DELTA=3
 
-prompt_template = """
+
+PROMPT_TEMPLATE = """
 Given the following Instagram post data:
 
 Account: {account}
