@@ -61,13 +61,11 @@ for name_table, post_table in zip(name_tables, post_tables):
     start_date = datetime.today() - timedelta(days=START_DELTA)
     end_date = datetime.today()
 
-    unfiltered_data = fetchData(accounts, departments, names, start_date, end_date, L)
-    if (unfiltered_data == []):
-        try:
-            unfiltered_data = fetchDataNoLogin(accounts, start_date, end_date)
-        except instaloader.exceptions.LoginRequiredException:
-            logger.error(f"Instaloader Login Required Exception for {name_table}. {total_predictions} processed, scraped and filter before failure.")
-            exit()
+    try:
+        unfiltered_data = fetchData(accounts, departments, names, start_date, end_date, L)
+    except instaloader.exceptions.LoginRequiredException: 
+        logger.error(f"HANDLED: fetchData raised instaloader.exceptions.LoginRequiredException {name_table}. {total_predictions} processed, scraped and filter before failure.")
+        unfiltered_data = fetchDataNoLogin(accounts, start_date, end_date) # If this raises LoginRequiredException we will accept the crash
 
     predictions = []
 

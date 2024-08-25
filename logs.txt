@@ -1,0 +1,1 @@
+08/25/09:59,360 ClubHUB INFO prod_utm_club_names: 0 events scraped, processed and inserted.
