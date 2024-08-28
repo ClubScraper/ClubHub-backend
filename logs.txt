@@ -5,3 +5,9 @@
 08/25/10:15,619 ClubHUB INFO prod_utsc_club_names: 0 events scraped, processed and inserted.
 08/25/10:16,22 ClubHUB INFO prod_utsg_club_names: 0 events scraped, processed and inserted.
 08/25/10:16,23 ClubHUB INFO Summary: 0 events scraped and processed.
+08/28/16:00,980 ClubHUB INFO prod_utm_club_names: 0 events scraped, processed and inserted.
+08/28/16:01,373 ClubHUB ERROR HANDLED: fetchData raised instaloader.exceptions.QueryReturnedBadRequestException for prod_utsc_club_names. Instagram thinks we are a bot.
+08/28/16:01,404 ClubHUB INFO prod_utsc_club_names: 1 events scraped, processed and inserted.
+08/28/16:01,403 ClubHUB ERROR HANDLED: fetchData raised instaloader.exceptions.QueryReturnedBadRequestException for prod_utsg_club_names. Instagram thinks we are a bot.
+08/28/16:01,736 ClubHUB INFO prod_utsg_club_names: 1 events scraped, processed and inserted.
+08/28/16:01,736 ClubHUB INFO Summary: 0 events scraped and processed.

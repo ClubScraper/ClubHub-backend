@@ -68,8 +68,9 @@ for name_table, post_table in zip(name_tables, post_tables):
         logger.error(f"HANDLED: fetchData raised instaloader.exceptions.LoginRequiredException {name_table}. {total_predictions} processed, scraped and filter before failure.")
         unfiltered_data = fetchDataNoLogin(accounts, departments, names, start_date, end_date) # If this raises LoginRequiredException we will accept the crash
     except instaloader.exceptions.QueryReturnedBadRequestException:
-        logger.error
-        exit(f"FAILURE: fetchData raised instaloader.exceptions.QueryReturnedBadRequestException for {name_table}. Instagram thinks we are a bot.")
+        logger.error(f"HANDLED: fetchData raised instaloader.exceptions.QueryReturnedBadRequestException for {name_table}. Instagram thinks we are a bot.")
+        unfiltered_data = fetchDataNoLogin(accounts, departments, names, start_date, end_date) # If this raises LoginRequiredException we will accept the crash
+    
     predictions = []
 
     # Predict content and extract dates from post
@@ -86,14 +87,12 @@ for name_table, post_table in zip(name_tables, post_tables):
             to_upload.append(result)
     
     prediction_count = len(predictions)
-    total_predictions += total_predictions
+    total_predictions += prediction_count
     # Insert into databse
     for i in range(0, len(to_upload)):
         if (to_upload[i].get("type") != 'Misc.' and to_upload[i].get("relevant_dates") != ''):
             to_upload[i]['caption'] = unfiltered_data[i]['caption']
             database.insertData(post_table, to_upload[i])
-    
-    print(to_upload)
     
     logger.info(f"{name_table}: {prediction_count} events scraped, processed and inserted.")
 
