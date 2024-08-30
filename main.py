@@ -42,7 +42,7 @@ logger.addHandler(file_handler)
 database = Database()
 LLAMA = Inference(model=MODEL, token=os.getenv("HUGGING_FACE_TOKEN"))
 L = instaloader.Instaloader() 
-L.login(os.getenv("INSTAGRAM_USER"), os.getenv("INSTAGRAM_PASS")) 
+# L.login(os.getenv("INSTAGRAM_USER"), os.getenv("INSTAGRAM_PASS")) 
 
 name_tables = [UTM_NAMES, UTSC_NAMES, UTSG_NAMES]
 post_tables = [UTM_POSTS, UTSC_POSTS, UTSC_POSTS]
