@@ -63,7 +63,7 @@ for name_table, post_table in zip(name_tables, post_tables):
     end_date = datetime.today()
 
     try:
-        unfiltered_data = fetchDataNoLogin(accounts, departments, names, start_date, end_date, L)
+        unfiltered_data = fetchDataNoLogin(accounts, departments, names, start_date, end_date)
     except instaloader.exceptions.LoginRequiredException: 
         logger.error(f"HANDLED: fetchData raised instaloader.exceptions.LoginRequiredException {name_table}. {total_predictions} processed, scraped and filter before failure.")
         unfiltered_data = fetchDataNoLogin(accounts, departments, names, start_date, end_date) # If this raises LoginRequiredException we will accept the crash
