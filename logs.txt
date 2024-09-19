@@ -39,3 +39,7 @@
 09/16/01:19,601 ClubHUB INFO prod_utsc_club_names: 2 events scraped, processed and inserted.
 09/16/01:20,872 ClubHUB INFO prod_utsg_club_names: 2 events scraped, processed and inserted.
 09/16/01:20,872 ClubHUB INFO Summary: 4 events scraped and processed.
+09/19/01:16,669 ClubHUB INFO prod_utm_club_names: 0 events scraped, processed and inserted.
+09/19/01:16,385 ClubHUB INFO prod_utsc_club_names: 5 events scraped, processed and inserted.
+09/19/01:16,533 ClubHUB INFO prod_utsg_club_names: 1 events scraped, processed and inserted.
+09/19/01:16,533 ClubHUB INFO Summary: 6 events scraped and processed.
